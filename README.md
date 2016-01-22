@@ -28,6 +28,9 @@ func main() {
     }
     fmt.Println(posts)
 
+    // print specified field
+    fmt.Println(posts.Posts[0].Name)
+
     // print with json string
     postsJson, _ := json.Marshal(posts)
     fmt.Println(string(postsJson))
