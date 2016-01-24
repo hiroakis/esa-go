@@ -333,8 +333,8 @@ func (c *EsaClient) buildRequest(req *http.Request) *http.Request {
 	return req
 }
 
-func (c *EsaClient) chackResponse(resp *http.Response) ([]uint8, error) {
-	var body []uint8
+func (c *EsaClient) chackResponse(resp *http.Response) ([]byte, error) {
+	var body []byte
 	var err error
 
 	if resp.StatusCode < 200 || resp.StatusCode > 300 {
