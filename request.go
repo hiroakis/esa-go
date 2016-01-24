@@ -11,7 +11,7 @@ type PostContent struct {
 	Category         string           `json:"category"`
 	Wip              bool             `json:"wip"`
 	Message          string           `json:"message"`
-	OriginalRevision OriginalRevision `json:"original_revision"`
+	OriginalRevision OriginalRevision `json:"original_revision,omitempty"`
 }
 
 type OriginalRevision struct {
