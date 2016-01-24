@@ -183,9 +183,11 @@ func main() {
     fmt.Println(deletedComment)
 ```
 
-## TODO
+## Tests
 
-testing
+```
+go test -v
+```
 
 ## License
 
