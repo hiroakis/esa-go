@@ -51,6 +51,14 @@ func (c *EsaClient) SetQuery(query string) {
 	c.Query = query
 }
 
+func (c *EsaClient) SetClient(client *http.Client) {
+	c.Client = client
+}
+
+func (c *EsaClient) SetApi(api string) {
+	c.Api = api
+}
+
 func (c *EsaClient) GetTeams() (Teams, error) {
 	teams := &Teams{}
 	endpoint := fmt.Sprintf("%s/teams", c.Api)

@@ -13,7 +13,7 @@ type Team struct {
 }
 
 type Teams struct {
-	Teams      []Team
+	Teams      []Team `json:"teams"`
 	PrevPage   string `json:"prev_page"`
 	NextPage   string `json:"next_page"`
 	TotalCount int    `json:"total_count"`
@@ -23,7 +23,7 @@ type Stats struct {
 	Members            int `json:"members"`
 	Posts              int `json:"posts"`
 	Comments           int `json:"comments"`
-	Starts             int `json:"stars"`
+	Stars              int `json:"stars"`
 	DailyActiveUsers   int `json:"daily_active_users"`
 	WeeklyActiveUsers  int `json:"weekly_active_users"`
 	MonthlyActiveUsers int `json:"monthly_active_users"`
@@ -37,10 +37,10 @@ type Member struct {
 }
 
 type Members struct {
-	Members    []Member
-	PrevPage   string `json:"prev_page"`
-	NextPage   string `json:"next_page"`
-	TotalCount int    `json:"total_count"`
+	Members    []Member `json:"members"`
+	PrevPage   string   `json:"prev_page"`
+	NextPage   string   `json:"next_page"`
+	TotalCount int      `json:"total_count"`
 }
 
 type ByUser struct {
@@ -50,10 +50,10 @@ type ByUser struct {
 }
 
 type Posts struct {
-	Posts      []Post `json:posts`
-	PrevPage   string `json:prev_page`
-	NextPage   string `json:next_page`
-	TotalCount int    `json:total_count`
+	Posts      []Post `json:"posts"`
+	PrevPage   string `json:"prev_page"`
+	NextPage   string `json:"next_page"`
+	TotalCount int    `json:"total_count"`
 }
 
 type Post struct {
@@ -64,10 +64,10 @@ type Post struct {
 	BodyMd          string    `json:"body_md"`
 	BodyHtml        string    `json:"body_html"`
 	CreatedAt       time.Time `json:"created_at"`
-	Message         string    `json:message"`
-	Url             string    `json:url"`
-	UpdatedAt       time.Time `json:updated_at"`
-	Tags            []string  `json:tags"`
+	Message         string    `json:"message"`
+	Url             string    `json:"url"`
+	UpdatedAt       time.Time `json:"updated_at"`
+	Tags            []string  `json:"tags"`
 	Category        string    `json:"category"`
 	RevisionNumber  int       `json:"revision_number"`
 	CreatedBy       ByUser    `json:"created_by"`
@@ -89,12 +89,12 @@ type Comment struct {
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 	Url       string    `json:"url"`
-	CreatedBy ByUser
+	CreatedBy ByUser    `json:"created_by"`
 }
 
 type Comments struct {
-	Comments   []Comment
-	PrevPage   string `json:prev_page`
-	NextPage   string `json:next_page`
-	TotalCount int    `json:total_count`
+	Comments   []Comment `json:"comments"`
+	PrevPage   string    `json:"prev_page"`
+	NextPage   string    `json:"next_page"`
+	TotalCount int       `json:"total_count"`
 }
