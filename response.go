@@ -72,6 +72,7 @@ type Post struct {
 	RevisionNumber  int       `json:"revision_number"`
 	CreatedBy       ByUser    `json:"created_by"`
 	UpdatedBy       ByUser    `json:"updated_by"`
+	Overlapped      bool      `json:"overlapped"`
 	Kind            string    `json:"kind"`
 	CommentsCount   int       `json:"comments_count"`
 	TasksCount      int       `json:"tasks_count"`
