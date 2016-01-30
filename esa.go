@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/hiroakis/esa-go/request"
+	"github.com/hiroakis/esa-go/response"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -59,8 +61,8 @@ func (c *EsaClient) SetApi(api string) {
 	c.Api = api
 }
 
-func (c *EsaClient) GetTeams() (Teams, error) {
-	teams := &Teams{}
+func (c *EsaClient) GetTeams() (response.Teams, error) {
+	teams := &response.Teams{}
 	endpoint := fmt.Sprintf("%s/teams", c.Api)
 
 	resp := c.sendGetRequest(endpoint)
@@ -74,8 +76,8 @@ func (c *EsaClient) GetTeams() (Teams, error) {
 	return *teams, err
 }
 
-func (c *EsaClient) GetTeam() (Team, error) {
-	team := &Team{}
+func (c *EsaClient) GetTeam() (response.Team, error) {
+	team := &response.Team{}
 	endpoint := fmt.Sprintf("%s/teams/%s", c.Api, c.Team)
 
 	resp := c.sendGetRequest(endpoint)
@@ -89,8 +91,8 @@ func (c *EsaClient) GetTeam() (Team, error) {
 	return *team, nil
 }
 
-func (c *EsaClient) GetStats() (Stats, error) {
-	stats := &Stats{}
+func (c *EsaClient) GetStats() (response.Stats, error) {
+	stats := &response.Stats{}
 	endpoint := fmt.Sprintf("%s/teams/%s/stats", c.Api, c.Team)
 
 	resp := c.sendGetRequest(endpoint)
@@ -104,8 +106,8 @@ func (c *EsaClient) GetStats() (Stats, error) {
 	return *stats, err
 }
 
-func (c *EsaClient) GetMembers() (Members, error) {
-	members := &Members{}
+func (c *EsaClient) GetMembers() (response.Members, error) {
+	members := &response.Members{}
 	endpoint := fmt.Sprintf("%s/teams/%s/members", c.Api, c.Team)
 
 	resp := c.sendGetRequest(endpoint)
@@ -119,8 +121,8 @@ func (c *EsaClient) GetMembers() (Members, error) {
 	return *members, err
 }
 
-func (c *EsaClient) GetPost(postNumber int) (Post, error) {
-	post := &Post{}
+func (c *EsaClient) GetPost(postNumber int) (response.Post, error) {
+	post := &response.Post{}
 	endpoint := fmt.Sprintf("%s/teams/%s/posts/%d", c.Api, c.Team, postNumber)
 
 	resp := c.sendGetRequest(endpoint)
@@ -134,8 +136,8 @@ func (c *EsaClient) GetPost(postNumber int) (Post, error) {
 	return *post, err
 }
 
-func (c *EsaClient) GetPosts() (Posts, error) {
-	posts := &Posts{}
+func (c *EsaClient) GetPosts() (response.Posts, error) {
+	posts := &response.Posts{}
 	endpoint := fmt.Sprintf("%s/teams/%s/posts", c.Api, c.Team)
 
 	resp := c.sendGetRequest(endpoint)
@@ -149,16 +151,16 @@ func (c *EsaClient) GetPosts() (Posts, error) {
 	return *posts, err
 }
 
-func (c *EsaClient) CreatePost(postContent PostContent) (Post, error) {
-	post := &Post{}
+func (c *EsaClient) CreatePost(reqPost request.Post) (response.Post, error) {
+	post := &response.Post{}
 	endpoint := fmt.Sprintf("%s/teams/%s/posts", c.Api, c.Team)
 
-	pc, err := json.Marshal(PostData{postContent})
+	postData, err := json.Marshal(request.PostData{reqPost})
 	if err != nil {
 		return *post, err
 	}
 
-	resp := c.sendPostRequest(endpoint, bytes.NewBuffer(pc))
+	resp := c.sendPostRequest(endpoint, bytes.NewBuffer(postData))
 	body, err := c.chackResponse(resp)
 	if err != nil {
 		return *post, err
@@ -169,16 +171,16 @@ func (c *EsaClient) CreatePost(postContent PostContent) (Post, error) {
 	return *post, err
 }
 
-func (c *EsaClient) UpdatePost(postNumber int, postContent PostContent) (Post, error) {
-	post := &Post{}
+func (c *EsaClient) UpdatePost(postNumber int, reqPost request.Post) (response.Post, error) {
+	post := &response.Post{}
 	endpoint := fmt.Sprintf("%s/teams/%s/posts/%d", c.Api, c.Team, postNumber)
 
-	pc, err := json.Marshal(PostData{postContent})
+	postData, err := json.Marshal(request.PostData{reqPost})
 	if err != nil {
 		return *post, err
 	}
 
-	resp := c.sendPatchRequest(endpoint, bytes.NewBuffer(pc))
+	resp := c.sendPatchRequest(endpoint, bytes.NewBuffer(postData))
 	body, err := c.chackResponse(resp)
 	if err != nil {
 		return *post, err
@@ -201,8 +203,8 @@ func (c *EsaClient) DeletePost(postNumber int) (bool, error) {
 	return true, err
 }
 
-func (c *EsaClient) GetComments(postNumber int) (Comments, error) {
-	comments := &Comments{}
+func (c *EsaClient) GetComments(postNumber int) (response.Comments, error) {
+	comments := &response.Comments{}
 	endpoint := fmt.Sprintf("%s/teams/%s/posts/%d/comments", c.Api, c.Team, postNumber)
 
 	resp := c.sendGetRequest(endpoint)
@@ -216,8 +218,8 @@ func (c *EsaClient) GetComments(postNumber int) (Comments, error) {
 	return *comments, err
 }
 
-func (c *EsaClient) GetComment(commentNumber int) (Comment, error) {
-	comment := &Comment{}
+func (c *EsaClient) GetComment(commentNumber int) (response.Comment, error) {
+	comment := &response.Comment{}
 	endpoint := fmt.Sprintf("%s/teams/%s/comments/%d", c.Api, c.Team, commentNumber)
 
 	resp := c.sendGetRequest(endpoint)
@@ -231,16 +233,16 @@ func (c *EsaClient) GetComment(commentNumber int) (Comment, error) {
 	return *comment, err
 }
 
-func (c *EsaClient) CreateComment(postNumber int, commentContent CommentContent) (Comment, error) {
-	comment := &Comment{}
+func (c *EsaClient) CreateComment(postNumber int, reqComment request.Comment) (response.Comment, error) {
+	comment := &response.Comment{}
 	endpoint := fmt.Sprintf("%s/teams/%s/posts/%d/comments", c.Api, c.Team, postNumber)
 
-	cc, err := json.Marshal(CommentData{commentContent})
+	commentData, err := json.Marshal(request.CommentData{reqComment})
 	if err != nil {
 		return *comment, err
 	}
 
-	resp := c.sendPostRequest(endpoint, bytes.NewBuffer(cc))
+	resp := c.sendPostRequest(endpoint, bytes.NewBuffer(commentData))
 	body, err := c.chackResponse(resp)
 	if err != nil {
 		return *comment, err
@@ -251,16 +253,16 @@ func (c *EsaClient) CreateComment(postNumber int, commentContent CommentContent)
 	return *comment, err
 }
 
-func (c *EsaClient) UpdateComment(commentId int, commentContent CommentContent) (Comment, error) {
-	comment := &Comment{}
+func (c *EsaClient) UpdateComment(commentId int, reqComment request.Comment) (response.Comment, error) {
+	comment := &response.Comment{}
 	endpoint := fmt.Sprintf("%s/teams/%s/comments/%d", c.Api, c.Team, commentId)
 
-	cc, err := json.Marshal(CommentData{commentContent})
+	commentData, err := json.Marshal(request.CommentData{reqComment})
 	if err != nil {
 		return *comment, err
 	}
 
-	resp := c.sendPatchRequest(endpoint, bytes.NewBuffer(cc))
+	resp := c.sendPatchRequest(endpoint, bytes.NewBuffer(commentData))
 	body, err := c.chackResponse(resp)
 	if err != nil {
 		return *comment, err
