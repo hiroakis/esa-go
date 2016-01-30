@@ -15,6 +15,7 @@ import (
     "encoding/json"
     "fmt"
     esa "github.com/hiroakis/esa-go"
+    "github.com/hiroakis/esa-go/request"
 )
 
 func main() {
