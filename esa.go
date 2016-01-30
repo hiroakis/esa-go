@@ -155,12 +155,12 @@ func (c *EsaClient) CreatePost(reqPost request.Post) (response.Post, error) {
 	post := &response.Post{}
 	endpoint := fmt.Sprintf("%s/teams/%s/posts", c.Api, c.Team)
 
-	pc, err := json.Marshal(request.PostData{reqPost})
+	postData, err := json.Marshal(request.PostData{reqPost})
 	if err != nil {
 		return *post, err
 	}
 
-	resp := c.sendPostRequest(endpoint, bytes.NewBuffer(pc))
+	resp := c.sendPostRequest(endpoint, bytes.NewBuffer(postData))
 	body, err := c.chackResponse(resp)
 	if err != nil {
 		return *post, err
@@ -175,12 +175,12 @@ func (c *EsaClient) UpdatePost(postNumber int, reqPost request.Post) (response.P
 	post := &response.Post{}
 	endpoint := fmt.Sprintf("%s/teams/%s/posts/%d", c.Api, c.Team, postNumber)
 
-	pc, err := json.Marshal(request.PostData{reqPost})
+	postData, err := json.Marshal(request.PostData{reqPost})
 	if err != nil {
 		return *post, err
 	}
 
-	resp := c.sendPatchRequest(endpoint, bytes.NewBuffer(pc))
+	resp := c.sendPatchRequest(endpoint, bytes.NewBuffer(postData))
 	body, err := c.chackResponse(resp)
 	if err != nil {
 		return *post, err
@@ -237,12 +237,12 @@ func (c *EsaClient) CreateComment(postNumber int, reqComment request.Comment) (r
 	comment := &response.Comment{}
 	endpoint := fmt.Sprintf("%s/teams/%s/posts/%d/comments", c.Api, c.Team, postNumber)
 
-	cc, err := json.Marshal(request.CommentData{reqComment})
+	commentData, err := json.Marshal(request.CommentData{reqComment})
 	if err != nil {
 		return *comment, err
 	}
 
-	resp := c.sendPostRequest(endpoint, bytes.NewBuffer(cc))
+	resp := c.sendPostRequest(endpoint, bytes.NewBuffer(commentData))
 	body, err := c.chackResponse(resp)
 	if err != nil {
 		return *comment, err
@@ -257,12 +257,12 @@ func (c *EsaClient) UpdateComment(commentId int, reqComment request.Comment) (re
 	comment := &response.Comment{}
 	endpoint := fmt.Sprintf("%s/teams/%s/comments/%d", c.Api, c.Team, commentId)
 
-	cc, err := json.Marshal(request.CommentData{reqComment})
+	commentData, err := json.Marshal(request.CommentData{reqComment})
 	if err != nil {
 		return *comment, err
 	}
 
-	resp := c.sendPatchRequest(endpoint, bytes.NewBuffer(cc))
+	resp := c.sendPatchRequest(endpoint, bytes.NewBuffer(commentData))
 	body, err := c.chackResponse(resp)
 	if err != nil {
 		return *comment, err
