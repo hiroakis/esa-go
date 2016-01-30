@@ -108,28 +108,28 @@ func main() {
     fmt.Println(posts)
 
     // create new post
-    postContent :=
-        PostContent{
+    reqPost :=
+        request.Post{
             Name:     "hi!",
             BodyMd:   "hello",
             Category: "Users/hiroakis/memo",
         }
 
-    createdPost, err := c.CreatePost(postContent)
+    createdPost, err := c.CreatePost(reqPost)
     if err != nil {
         fmt.Println(err)
     }
     fmt.Println(createdPost)
 
     // update post
-    postContent :=
-        PostContent{
+    reqPost :=
+        request.Post{
             Name:     "hi!",
             BodyMd:   "おは",
             Category: "Users/hiroakis/memo",
         }
 
-    updatedPost, err := c.UpdatePost(549, postContent)
+    updatedPost, err := c.UpdatePost(549, reqPost)
     if err != nil {
         fmt.Println(err)
     }
@@ -157,20 +157,20 @@ func main() {
     fmt.Println(comment)
 
     // create comment
-    commentContent := CommentContent{
+    reqComment := request.Comment{
         BodyMd: "comment!",
     }
-    createdComment, err := c.CreateComment(543, commentContent)
+    createdComment, err := c.CreateComment(543, reqComment)
     if err != nil {
         fmt.Println(err)
     }
     fmt.Println(createdComment)
 
     // update comment
-    commentContent = CommentContent{
+    reqComment = request.Comment{
         BodyMd: "comment!!!!",
     }
-    updatedComment, err := c.UpdateComment(80737, commentContent)
+    updatedComment, err := c.UpdateComment(80737, reqComment)
     if err != nil {
         fmt.Println(err)
     }

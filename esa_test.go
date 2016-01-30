@@ -3,6 +3,7 @@ package esa
 import (
 	"bytes"
 	"encoding/json"
+	"github.com/hiroakis/esa-go/request"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -248,7 +249,7 @@ var createPostHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Req
   "watch": true
 }
 `
-	var postData PostData
+	var postData request.PostData
 	bufbody := &bytes.Buffer{}
 	bufbody.ReadFrom(r.Body)
 	json.Unmarshal(bufbody.Bytes(), &postData)
@@ -258,31 +259,31 @@ var createPostHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Req
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if postData.PostContent.Name != "hi!" {
+	if postData.Post.Name != "hi!" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if postData.PostContent.BodyMd != "# Getting Started\n" {
+	if postData.Post.BodyMd != "# Getting Started\n" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if postData.PostContent.Tags[0] != "api" {
+	if postData.Post.Tags[0] != "api" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if postData.PostContent.Tags[1] != "dev" {
+	if postData.Post.Tags[1] != "dev" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if postData.PostContent.Category != "dev/2015/05/10" {
+	if postData.Post.Category != "dev/2015/05/10" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if postData.PostContent.Wip != false {
+	if postData.Post.Wip != false {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if postData.PostContent.Message != "Add Getting Started section" {
+	if postData.Post.Message != "Add Getting Started section" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -331,7 +332,7 @@ var updatePostHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Req
   "watch": true
 }
 `
-	var postData PostData
+	var postData request.PostData
 	bufbody := &bytes.Buffer{}
 	bufbody.ReadFrom(r.Body)
 	json.Unmarshal(bufbody.Bytes(), &postData)
@@ -341,43 +342,43 @@ var updatePostHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Req
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if postData.PostContent.Name != "hi!" {
+	if postData.Post.Name != "hi!" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if postData.PostContent.BodyMd != "# Getting Started\n" {
+	if postData.Post.BodyMd != "# Getting Started\n" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if postData.PostContent.Tags[0] != "api" {
+	if postData.Post.Tags[0] != "api" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if postData.PostContent.Tags[1] != "dev" {
+	if postData.Post.Tags[1] != "dev" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if postData.PostContent.Category != "dev/2015/05/10" {
+	if postData.Post.Category != "dev/2015/05/10" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if postData.PostContent.Wip != false {
+	if postData.Post.Wip != false {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if postData.PostContent.Message != "Add Getting Started section" {
+	if postData.Post.Message != "Add Getting Started section" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if postData.PostContent.OriginalRevision.BodyMd != "# Getting ..." {
+	if postData.Post.OriginalRevision.BodyMd != "# Getting ..." {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if postData.PostContent.OriginalRevision.Number != 1 {
+	if postData.Post.OriginalRevision.Number != 1 {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if postData.PostContent.OriginalRevision.User != "hiroakis" {
+	if postData.Post.OriginalRevision.User != "hiroakis" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -472,7 +473,7 @@ var createCommentHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.
   }
 }
 `
-	var commentData CommentData
+	var commentData request.CommentData
 	bufbody := &bytes.Buffer{}
 	bufbody.ReadFrom(r.Body)
 	json.Unmarshal(bufbody.Bytes(), &commentData)
@@ -482,7 +483,7 @@ var createCommentHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if commentData.CommentContent.BodyMd != "LGTM!" {
+	if commentData.Comment.BodyMd != "LGTM!" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -506,7 +507,7 @@ var updateCommentHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.
   }
 }
 `
-	var commentData CommentData
+	var commentData request.CommentData
 	bufbody := &bytes.Buffer{}
 	bufbody.ReadFrom(r.Body)
 	json.Unmarshal(bufbody.Bytes(), &commentData)
@@ -516,7 +517,7 @@ var updateCommentHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if commentData.CommentContent.BodyMd != "LGTM!!!" {
+	if commentData.Comment.BodyMd != "LGTM!!!" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -865,8 +866,8 @@ func TestCreatePost(t *testing.T) {
 	testServer := httptest.NewServer(createPostHandler)
 	defer testServer.Close()
 
-	postContent :=
-		PostContent{
+	reqPost :=
+		request.Post{
 			Name:   "hi!",
 			BodyMd: "# Getting Started\n",
 			Tags: []string{
@@ -877,7 +878,7 @@ func TestCreatePost(t *testing.T) {
 			Wip:      false,
 			Message:  "Add Getting Started section",
 		}
-	post, err := fakeClient(testServer.URL).CreatePost(postContent)
+	post, err := fakeClient(testServer.URL).CreatePost(reqPost)
 
 	if err != nil {
 		t.Error(err)
@@ -949,8 +950,8 @@ func TestUpdatePost(t *testing.T) {
 	testServer := httptest.NewServer(updatePostHandler)
 	defer testServer.Close()
 
-	postContent :=
-		PostContent{
+	reqPost :=
+		request.Post{
 			Name:   "hi!",
 			BodyMd: "# Getting Started\n",
 			Tags: []string{
@@ -960,13 +961,13 @@ func TestUpdatePost(t *testing.T) {
 			Category: "dev/2015/05/10",
 			Wip:      false,
 			Message:  "Add Getting Started section",
-			OriginalRevision: OriginalRevision{
+			OriginalRevision: request.OriginalRevision{
 				BodyMd: "# Getting ...",
 				Number: 1,
 				User:   "hiroakis",
 			},
 		}
-	post, err := fakeClient(testServer.URL).UpdatePost(1, postContent)
+	post, err := fakeClient(testServer.URL).UpdatePost(1, reqPost)
 
 	if err != nil {
 		t.Error(err)
@@ -1143,10 +1144,10 @@ func TestCreateComment(t *testing.T) {
 	testServer := httptest.NewServer(createCommentHandler)
 	defer testServer.Close()
 
-	commentContent := CommentContent{
+	reqComment := request.Comment{
 		BodyMd: "LGTM!",
 	}
-	comment, err := fakeClient(testServer.URL).CreateComment(2, commentContent)
+	comment, err := fakeClient(testServer.URL).CreateComment(2, reqComment)
 
 	if err != nil {
 		t.Error(err)
@@ -1188,10 +1189,10 @@ func TestUpdateComment(t *testing.T) {
 	testServer := httptest.NewServer(updateCommentHandler)
 	defer testServer.Close()
 
-	commentContent := CommentContent{
+	reqComment := request.Comment{
 		BodyMd: "LGTM!!!",
 	}
-	comment, err := fakeClient(testServer.URL).UpdateComment(2, commentContent)
+	comment, err := fakeClient(testServer.URL).UpdateComment(2, reqComment)
 
 	if err != nil {
 		t.Error(err)

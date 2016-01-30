@@ -1,10 +1,10 @@
-package esa
+package request
 
 type PostData struct {
-	PostContent PostContent `json:"post"`
+	Post Post `json:"post"`
 }
 
-type PostContent struct {
+type Post struct {
 	Name             string           `json:"name"`
 	BodyMd           string           `json:"body_md"`
 	Tags             []string         `json:"tags"`
@@ -21,9 +21,9 @@ type OriginalRevision struct {
 }
 
 type CommentData struct {
-	CommentContent CommentContent `json:"comment"`
+	Comment Comment `json:"comment"`
 }
 
-type CommentContent struct {
+type Comment struct {
 	BodyMd string `json:"body_md"`
 }
