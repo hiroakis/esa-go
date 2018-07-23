@@ -567,10 +567,10 @@ func TestGetTeams(t *testing.T) {
 	if teams.Teams[0].Url != "https://docs.esa.io/" {
 		t.Error("Url does not match")
 	}
-	if teams.PrevPage != "" {
+	if teams.PrevPage != 0 {
 		t.Error("PrevPage does not match")
 	}
-	if teams.NextPage != "1" {
+	if teams.NextPage != 1 {
 		t.Error("NextPage does not match")
 	}
 	if teams.TotalCount != 1 {
@@ -669,10 +669,10 @@ func TestGetMembers(t *testing.T) {
 	if members.Members[1].Email != "sano@example.com" {
 		t.Error("Email does not match")
 	}
-	if members.PrevPage != "" {
+	if members.PrevPage != 0 {
 		t.Error("PrevPage does not match")
 	}
-	if members.NextPage != "1" {
+	if members.NextPage != 1 {
 		t.Error("NextPage does not match")
 	}
 	if members.TotalCount != 2 {
@@ -753,10 +753,10 @@ func TestGetPosts(t *testing.T) {
 	if posts.Posts[0].UpdatedBy.Icon != "http://img.esa.io/uploads/production/users/1/icon/thumb_m_402685a258cf2a33c1d6c13a89adec92.png" {
 		t.Error("UpdatedBy.Icon does not match")
 	}
-	if posts.PrevPage != "" {
+	if posts.PrevPage != 0 {
 		t.Error("PrevPage does not match")
 	}
-	if posts.NextPage != "1" {
+	if posts.NextPage != 1 {
 		t.Error("NextPage does not match")
 	}
 	if posts.TotalCount != 1 {
@@ -1088,10 +1088,10 @@ func TestGetComments(t *testing.T) {
 	if comments.Comments[0].CreatedBy.Icon != "https://img.esa.io/uploads/production/users/1/icon/thumb_m_402685a258cf2a33c1d6c13a89adec92.png" {
 		t.Error("CreatedBy.Icon does not match")
 	}
-	if comments.PrevPage != "" {
+	if comments.PrevPage != 0 {
 		t.Error("PrevPage does not match")
 	}
-	if comments.NextPage != "1" {
+	if comments.NextPage != 1 {
 		t.Error("NextPage does not match")
 	}
 	if comments.TotalCount != 1 {

@@ -14,8 +14,8 @@ type Team struct {
 
 type Teams struct {
 	Teams      []Team `json:"teams"`
-	PrevPage   string `json:"prev_page"`
-	NextPage   string `json:"next_page"`
+	PrevPage   int    `json:"prev_page"`
+	NextPage   int    `json:"next_page"`
 	TotalCount int    `json:"total_count"`
 }
 
@@ -38,8 +38,8 @@ type Member struct {
 
 type Members struct {
 	Members    []Member `json:"members"`
-	PrevPage   string   `json:"prev_page"`
-	NextPage   string   `json:"next_page"`
+	PrevPage   int      `json:"prev_page"`
+	NextPage   int      `json:"next_page"`
 	TotalCount int      `json:"total_count"`
 }
 
@@ -51,8 +51,8 @@ type ByUser struct {
 
 type Posts struct {
 	Posts      []Post `json:"posts"`
-	PrevPage   string `json:"prev_page"`
-	NextPage   string `json:"next_page"`
+	PrevPage   int    `json:"prev_page"`
+	NextPage   int    `json:"next_page"`
 	TotalCount int    `json:"total_count"`
 }
 
@@ -95,7 +95,7 @@ type Comment struct {
 
 type Comments struct {
 	Comments   []Comment `json:"comments"`
-	PrevPage   string    `json:"prev_page"`
-	NextPage   string    `json:"next_page"`
+	PrevPage   int       `json:"prev_page"`
+	NextPage   int       `json:"next_page"`
 	TotalCount int       `json:"total_count"`
 }
