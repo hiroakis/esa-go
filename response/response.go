@@ -1,6 +1,7 @@
 package response
 
 import (
+	"encoding/json"
 	"time"
 )
 
@@ -13,10 +14,10 @@ type Team struct {
 }
 
 type Teams struct {
-	Teams      []Team `json:"teams"`
-	PrevPage   int    `json:"prev_page"`
-	NextPage   int    `json:"next_page"`
-	TotalCount int    `json:"total_count"`
+	Teams      []Team      `json:"teams"`
+	PrevPage   json.Number `json:"prev_page"`
+	NextPage   json.Number `json:"next_page"`
+	TotalCount int         `json:"total_count"`
 }
 
 type Stats struct {
@@ -37,10 +38,10 @@ type Member struct {
 }
 
 type Members struct {
-	Members    []Member `json:"members"`
-	PrevPage   int      `json:"prev_page"`
-	NextPage   int      `json:"next_page"`
-	TotalCount int      `json:"total_count"`
+	Members    []Member    `json:"members"`
+	PrevPage   json.Number `json:"prev_page"`
+	NextPage   json.Number `json:"next_page"`
+	TotalCount int         `json:"total_count"`
 }
 
 type ByUser struct {
@@ -50,10 +51,10 @@ type ByUser struct {
 }
 
 type Posts struct {
-	Posts      []Post `json:"posts"`
-	PrevPage   int    `json:"prev_page"`
-	NextPage   int    `json:"next_page"`
-	TotalCount int    `json:"total_count"`
+	Posts      []Post      `json:"posts"`
+	PrevPage   json.Number `json:"prev_page"`
+	NextPage   json.Number `json:"next_page"`
+	TotalCount int         `json:"total_count"`
 }
 
 type Post struct {
@@ -94,8 +95,8 @@ type Comment struct {
 }
 
 type Comments struct {
-	Comments   []Comment `json:"comments"`
-	PrevPage   int       `json:"prev_page"`
-	NextPage   int       `json:"next_page"`
-	TotalCount int       `json:"total_count"`
+	Comments   []Comment   `json:"comments"`
+	PrevPage   json.Number `json:"prev_page"`
+	NextPage   json.Number `json:"next_page"`
+	TotalCount int         `json:"total_count"`
 }
