@@ -3,11 +3,12 @@ package esa
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/hiroakis/esa-go/request"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 	"time"
+
+	"github.com/hiroakis/esa-go/request"
 )
 
 // All of the dummy data are from https://docs.esa.io/posts/102
@@ -25,7 +26,7 @@ var teamsHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request)
     }
   ],
   "prev_page": null,
-  "next_page": null,
+  "next_page": 1,
   "total_count": 1
 }
 `
@@ -99,7 +100,7 @@ var membersHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Reques
     }
   ],
   "prev_page": null,
-  "next_page": null,
+  "next_page": 1,
   "total_count": 2
 }
 `
@@ -147,7 +148,7 @@ var postsHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request)
     }
   ],
   "prev_page": null,
-  "next_page": null,
+  "next_page": 1,
   "total_count": 1
 }
 `
@@ -417,7 +418,7 @@ var commentsHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Reque
     }
   ],
   "prev_page": null,
-  "next_page": null,
+  "next_page": 1,
   "total_count": 1
 }
 `
@@ -566,10 +567,10 @@ func TestGetTeams(t *testing.T) {
 	if teams.Teams[0].Url != "https://docs.esa.io/" {
 		t.Error("Url does not match")
 	}
-	if teams.PrevPage != "" {
+	if teams.PrevPage.String() != "" {
 		t.Error("PrevPage does not match")
 	}
-	if teams.NextPage != "" {
+	if teams.NextPage.String() != "1" {
 		t.Error("NextPage does not match")
 	}
 	if teams.TotalCount != 1 {
@@ -668,10 +669,10 @@ func TestGetMembers(t *testing.T) {
 	if members.Members[1].Email != "sano@example.com" {
 		t.Error("Email does not match")
 	}
-	if members.PrevPage != "" {
+	if members.PrevPage.String() != "" {
 		t.Error("PrevPage does not match")
 	}
-	if members.NextPage != "" {
+	if members.NextPage.String() != "1" {
 		t.Error("NextPage does not match")
 	}
 	if members.TotalCount != 2 {
@@ -752,10 +753,10 @@ func TestGetPosts(t *testing.T) {
 	if posts.Posts[0].UpdatedBy.Icon != "http://img.esa.io/uploads/production/users/1/icon/thumb_m_402685a258cf2a33c1d6c13a89adec92.png" {
 		t.Error("UpdatedBy.Icon does not match")
 	}
-	if posts.PrevPage != "" {
+	if posts.PrevPage.String() != "" {
 		t.Error("PrevPage does not match")
 	}
-	if posts.NextPage != "" {
+	if posts.NextPage.String() != "1" {
 		t.Error("NextPage does not match")
 	}
 	if posts.TotalCount != 1 {
@@ -1087,10 +1088,10 @@ func TestGetComments(t *testing.T) {
 	if comments.Comments[0].CreatedBy.Icon != "https://img.esa.io/uploads/production/users/1/icon/thumb_m_402685a258cf2a33c1d6c13a89adec92.png" {
 		t.Error("CreatedBy.Icon does not match")
 	}
-	if comments.PrevPage != "" {
+	if comments.PrevPage.String() != "" {
 		t.Error("PrevPage does not match")
 	}
-	if comments.NextPage != "" {
+	if comments.NextPage.String() != "1" {
 		t.Error("NextPage does not match")
 	}
 	if comments.TotalCount != 1 {
