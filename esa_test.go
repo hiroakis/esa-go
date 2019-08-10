@@ -878,6 +878,7 @@ func TestCreatePost(t *testing.T) {
 			Category: "dev/2015/05/10",
 			Wip:      false,
 			Message:  "Add Getting Started section",
+			TemplatePostId: 123,
 		}
 	post, err := fakeClient(testServer.URL).CreatePost(reqPost)
 
