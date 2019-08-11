@@ -8,7 +8,7 @@ type Post struct {
 	Name             string           `json:"name,omitempty"`
 	BodyMd           string           `json:"body_md,omitempty"`
 	Tags             []string         `json:"tags"`
-	Category         string           `json:"category"`
+	Category         string           `json:"category,omitempty"`
 	Wip              bool             `json:"wip"`
 	Message          string           `json:"message"`
 	OriginalRevision OriginalRevision `json:"original_revision,omitempty"`
