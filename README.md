@@ -122,6 +122,18 @@ func main() {
     }
     fmt.Println(createdPost)
 
+    // create new post use template
+    reqPost :=
+        request.Post{
+            TemplatePostId: 123,
+        }
+
+    createdPost, err := c.CreatePost(reqPost)
+    if err != nil {
+        fmt.Println(err)
+    }
+    fmt.Println(createdPost)
+
     // update post
     reqPost :=
         request.Post{
